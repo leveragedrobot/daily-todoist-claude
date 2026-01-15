@@ -1,0 +1,6 @@
+{
+  "name": "daily-todoist-claude",
+  "description": "Claude Code command that reviews Todoist tasks and identifies which ones AI can complete",
+  "version": "1.0.0",
+  "repository": "https://github.com/leveragedrobot/daily-todoist-claude"
+}
