@@ -1,7 +1,7 @@
 ---
 name: daily-todoist
 description: Review Todoist tasks and identify which ones Claude can complete autonomously
-version: 1.0.0
+version: 2.0.0
 ---
 
 # Daily Todoist Review
@@ -10,21 +10,17 @@ Scans all Todoist tasks and categorizes them by what Claude can handle vs. what 
 
 ## Step 1: Fetch All Tasks
 
-Use the Todoist MCP tools to get a comprehensive view:
+Use the `td` CLI (Todoist CLI) with JSON output:
 
-1. First get the overview of all projects:
-```
-Use mcp__todoist__get-overview (no projectId) to see all projects
-```
+```bash
+# Get today's tasks + overdue
+td today --json
 
-2. Then fetch tasks due today and overdue:
-```
-Use mcp__todoist__find-tasks-by-date with startDate="today", limit=100
-```
+# Get inbox tasks (captured items)
+td inbox --json
 
-3. Also fetch tasks from inbox (often where captured items land):
-```
-Use mcp__todoist__find-tasks with projectId="inbox", limit=50
+# Get upcoming tasks (next 7 days)
+td upcoming --json
 ```
 
 ## Step 2: Categorize Tasks
@@ -90,9 +86,40 @@ Format the output as:
 
 When the user approves tasks:
 1. Work through them one at a time
-2. Mark each as complete in Todoist using `mcp__todoist__complete-tasks`
-3. If a task spawns subtasks, add them to Todoist
-4. Report results for each completed task
+2. Mark each as complete in Todoist:
+   ```bash
+   td task complete <task-id>
+   ```
+3. If a task spawns subtasks, add them:
+   ```bash
+   td add "New task description"
+   ```
+4. Add comments to tasks if needed:
+   ```bash
+   td comment add --task-id <task-id> "Comment text"
+   ```
+5. Report results for each completed task
+
+## Useful td CLI Commands
+
+```bash
+# List tasks
+td today --json              # Today + overdue
+td inbox --json              # Inbox
+td upcoming 14 --json        # Next 14 days
+
+# Manage tasks
+td add "Task name"           # Quick add with natural language
+td task complete <id>        # Mark complete
+td task view <id>            # View task details
+
+# Comments
+td comment add --task-id <id> "Comment"
+td comment list --task-id <id>
+
+# Projects
+td project list --json       # List all projects
+```
 
 ## Notes
 
@@ -100,3 +127,4 @@ When the user approves tasks:
 - For vague tasks like "Handle X", ask for clarification before attempting
 - If a task is blocked by something, note the blocker
 - Consider task priorities (p1 = urgent, p4 = low)
+- Use `--json` flag for parseable output
