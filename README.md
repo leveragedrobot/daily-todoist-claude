@@ -17,7 +17,14 @@ When you run `/daily-todoist`, Claude will:
 ## Prerequisites
 
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed
-- [Todoist MCP Server](https://github.com/anthropics/claude-mcp-server-todoist) configured
+- [td CLI](https://github.com/sachaos/todoist) (Todoist CLI) installed and authenticated
+  ```bash
+  # Install (macOS)
+  brew install sachaos/todoist/todoist
+
+  # Authenticate
+  todoist sync
+  ```
 
 ## Installation
 
@@ -57,22 +64,25 @@ Claude will analyze your tasks and present a categorized summary. You can then t
 ## Todoist Daily Review - January 14, 2026
 
 ### Ready to Complete (Claude can do now)
-| # | Task | Project | Why Claude Can Do It |
-|---|------|---------|---------------------|
-| 1 | Research competitor pricing | Work | Web research task |
-| 2 | Draft meeting agenda | Work | Writing/planning task |
-| 3 | Create backup script | Personal | Code task |
+| # | Task | ID | Priority | Project | Why Claude Can Do It |
+|---|------|-----|----------|---------|---------------------|
+| 1 | Research competitor pricing | 8234567 | P2 | Work | Web research task |
+| 2 | Draft meeting agenda | 8234568 | P1 | Work | Writing/planning task |
+| 3 | Create backup script | 8234569 | P3 | Personal | Code task |
+
+**Want me to complete any of these?** Reply with the task numbers or "all".
 
 ### Human Required
-| Task | Project | Why |
-|------|---------|-----|
-| Call dentist | Personal | Phone call required |
-| Buy groceries | Personal | Physical task |
+| Task | Priority | Project | Why |
+|------|----------|---------|-----|
+| Call dentist | P2 | Personal | Phone call required |
+| Buy groceries | P4 | Personal | Physical task |
 
 ### Quick Stats
 - Total tasks reviewed: 12
 - Claude can handle: 3 (25%)
 - Overdue items: 2
+- High priority (P1/P2): 4
 ```
 
 ## Customization
