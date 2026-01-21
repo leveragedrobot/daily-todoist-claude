@@ -20,7 +20,7 @@ td today --json
 td inbox --json
 
 # Get upcoming tasks (next 7 days)
-td upcoming --json
+td upcoming 7 --json
 ```
 
 ## Step 2: Categorize Tasks
@@ -60,26 +60,27 @@ Format the output as:
 ## Todoist Daily Review - [Today's Date]
 
 ### Ready to Complete (Claude can do now)
-| Task | Project | Why Claude Can Do It |
-|------|---------|---------------------|
-| ... | ... | ... |
+| # | Task | ID | Priority | Project | Why Claude Can Do It |
+|---|------|-----|----------|---------|---------------------|
+| 1 | ... | 123 | P2 | ... | ... |
 
 **Want me to complete any of these?** Reply with the task numbers or "all".
 
 ### Need Your Approval First
-| Task | Project | What Claude Would Do |
-|------|---------|---------------------|
-| ... | ... | ... |
+| # | Task | ID | Priority | Project | What Claude Would Do |
+|---|------|-----|----------|---------|---------------------|
+| 1 | ... | 456 | P1 | ... | ... |
 
 ### Human Required
-| Task | Project | Why |
-|------|---------|-----|
-| ... | ... | ... |
+| Task | Priority | Project | Why |
+|------|----------|---------|-----|
+| ... | P3 | ... | ... |
 
 ### Quick Stats
 - Total tasks reviewed: X
 - Claude can handle: X (Y%)
 - Overdue items: X
+- High priority (P1/P2): X
 ```
 
 ## Step 4: Execute Approved Tasks
@@ -126,5 +127,7 @@ td project list --json       # List all projects
 - Be conservative - if unsure whether Claude can complete a task, put it in "Need Approval"
 - For vague tasks like "Handle X", ask for clarification before attempting
 - If a task is blocked by something, note the blocker
-- Consider task priorities (p1 = urgent, p4 = low)
+- Consider task priorities (p1 = urgent, p4 = low) when presenting tasks
 - Use `--json` flag for parseable output
+- **Recurring tasks**: Completing a recurring task creates the next occurrence automatically
+- **Error handling**: If `td` commands fail, check that the CLI is installed (`td --version`) and authenticated (`td sync`)
